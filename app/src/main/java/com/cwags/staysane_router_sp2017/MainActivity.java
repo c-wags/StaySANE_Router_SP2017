@@ -9,14 +9,20 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.cwags.staysane_router_sp2017.support.BootLoader;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar); //This is a comment
+
+        //Creating a Bootloader object
+        BootLoader bootLoader = new BootLoader(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
