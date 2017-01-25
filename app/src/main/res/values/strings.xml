@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">StaySANE_Router_SP2017</string>
     <string name="action_settings">Settings</string>
+    <string name="title_bar">The Christian Router</string>
+    <string name="sniffer_title_bar">Sniffer Frame List</string>
+    <string name="protocol_explanation">Protocol Explanation</string>
+    <string name="hex_information">Hex information</string>
+    <string name="table_title_bar">Tables of Knowledge</string>
+    <string name="adjacency_table_title">Adjacency Table</string>
+    <string name="arp_table_title">ARP Table</string>
+    <string name="forwarding_table_title">Forwarding Table</string>
+    <string name="routing_table_title">Routing Table</string>
+    <string name="IPMenuItem">Show IP Address</string>
 </resources>

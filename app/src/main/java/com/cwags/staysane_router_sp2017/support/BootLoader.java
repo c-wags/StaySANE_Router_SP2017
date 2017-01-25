@@ -9,7 +9,11 @@ import java.lang.reflect.Constructor;
 import java.util.Observable;
 
 /**
- * Created by christian.wagner on 1/12/17.
+ * Name: BootLoader Class
+ *
+ * Description: All the singleton classes (classes that can only have one instance) in the router
+ * will be instantiated by the BootLoader. Then when they are all created the bootloader will
+ * notify them (via Observables) that the router is done creating classes.
  */
 
 public class BootLoader extends Observable {
@@ -25,12 +29,14 @@ public class BootLoader extends Observable {
     private void bootRouter(Activity activity) {
         ParentActivity.setParentActivity(activity);
 
-        //Creating instances of the Constats and Factory class
+        //Adding observers to be notified by this BootLoader observable
         addObserver(Constants.getInstance());
+        addObserver(UIManager.getInstance());
 
-        //Notifying the observables that the router is booted
+        //Notifying the observers that the router is booted
         setChanged();
         notifyObservers();
         Log.i(Constants.logTag,"Router Booted!");
+        UIManager.getInstance().raiseToast("Router Booted!");
     }
 }

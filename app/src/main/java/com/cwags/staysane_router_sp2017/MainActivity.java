@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.cwags.staysane_router_sp2017.networks.Constants;
 import com.cwags.staysane_router_sp2017.support.BootLoader;
+import com.cwags.staysane_router_sp2017.support.UIManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,15 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Creating a Bootloader object
         BootLoader bootLoader = new BootLoader(this);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     @Override
@@ -51,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+
+        //Show the IP address if the IP address menu item is pressed
+        if(item.getItemId() == R.id.showIPAddress){
+            UIManager.getInstance().raiseToast("Your IP Address is "+ Constants.IP_ADDRESS);
         }
 
         return super.onOptionsItemSelected(item);

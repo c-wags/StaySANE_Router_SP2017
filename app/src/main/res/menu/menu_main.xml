@@ -7,4 +7,11 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+
+    <!-- A menu item for our router's IP address -->
+    <item
+        android:id="@+id/showIPAddress"
+        android:orderInCategory="110"
+        android:title="@string/IPMenuItem" />
+
 </menu>

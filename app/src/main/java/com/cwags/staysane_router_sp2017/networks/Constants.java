@@ -11,8 +11,13 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Created by christian.wagner on 1/12/17.
+ * Name: Constants Class
+ *
+ * Description: This class will hold constants to be used throughout the rest of the router. The
+ * purpose of using constants here is to only have to change the value once here, instead of
+ * everywhere the constant would be used.
  */
+
 public class Constants implements Observer {
 
     public static String routerName = new String("Cwags"); //This is the name of the router

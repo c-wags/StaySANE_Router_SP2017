@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/backgroundColor"
     android:id="@+id/content_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,8 +14,225 @@
     tools:context="com.cwags.staysane_router_sp2017.MainActivity"
     tools:showIn="@layout/activity_main">
 
+    <!-- This is the top Title Bar -->
     <TextView
-        android:layout_width="wrap_content"
+        android:text="@string/title_bar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_alignParentTop="true"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:background="@color/widgetColor"
+        android:layout_marginTop="@dimen/widget_padding"
+        android:layout_marginBottom="@dimen/widget_padding"
+        android:id="@+id/titleBar"
+        android:layout_alignParentStart="true" />
+
+    <!-- This is the relative layout for the sniffer -->
+    <RelativeLayout
+        android:layout_width="510dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/widget_padding"
+        android:background="@color/widgetColor"
+        android:layout_below="@+id/titleBar"
+        android:id="@+id/snifferRelativeLayout" >
+
+        <!-- This is the Sniffer title bar -->
+        <TextView
+            android:text="@string/sniffer_title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:textSize="14sp"
+            android:textColor="@color/whiteText"
+            android:textAlignment="center"
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginBottom="@dimen/widget_padding"
+            android:id="@+id/snifferTitleBar" />
+
+        <!-- This is the list view for the scrollable list of packets captured -->
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:layout_below="@+id/snifferTitleBar"
+            android:padding="@dimen/widget_padding"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/whiteText"
+            android:id="@+id/packetList" />
+
+        <!-- This is the text view to display protocol explanations.
+        It is wrappable with Horizontal Scrolling set to false. -->
+        <TextView
+            android:text="@string/protocol_explanation"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/packetList"
+            android:background="@color/colorPrimary"
+            android:scrollHorizontally="false"
+            android:padding="@dimen/widget_padding"
+            android:textColor="@color/whiteText"
+            android:layout_marginTop="@dimen/inner_table_seperators"
+            android:id="@+id/protocolExplanations" />
+
+        <!-- This is the Hex information for each packet.
+        It is wrappable with Horizontal Scrolling set to false. -->
+        <TextView
+            android:text="@string/hex_information"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scrollHorizontally="false"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/whiteText"
+            android:layout_below="@+id/protocolExplanations"
+            android:padding="@dimen/widget_padding"
+            android:layout_marginTop="@dimen/inner_table_seperators"
+            android:id="@+id/hexPacketContent" />
+
+    </RelativeLayout>
+
+    <!-- This is the relative layout for the tables -->
+    <RelativeLayout
+        android:layout_width="320dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/widgetColor"
+        android:padding="@dimen/widget_padding"
+        android:layout_below="@+id/titleBar"
+        android:id="@+id/tablesRelativeLayout" >
+
+        <!-- This is the title bar for the tables of information. -->
+        <TextView
+            android:text="@string/table_title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textAlignment="center"
+            android:textColor="@color/whiteText"
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginBottom="@dimen/widget_padding"
+            android:id="@+id/tableTitleBar" />
+
+        <!-- This is the relative layout for the Adjaceny Table. -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_below="@+id/tableTitleBar"
+            android:id="@+id/adjacencyTableRelativeLayout">
+
+            <!-- This is the title bar for the Adjaceny Table. -->
+            <TextView
+                android:text="@string/adjacency_table_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textAlignment="center"
+                android:layout_alignParentTop="true"
+                android:textColor="@color/whiteText"
+                android:background="@color/colorPrimaryDark"
+                android:id="@+id/adjacencyTitleBar" />
+
+            <!-- This is the list view for the Adjaceny Table,
+            which will list the actual information in the table. -->
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="78dp"
+                android:layout_below="@+id/adjacencyTitleBar"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/whiteText" />
+
+        </RelativeLayout>
+
+        <!-- This is the relative layout for the ARP Table. -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_below="@+id/adjacencyTableRelativeLayout"
+            android:layout_marginTop="@dimen/inner_table_seperators"
+            android:id="@+id/arpTableRelativeLayout" >
+
+            <!-- This is the title bar for the ARP Table. -->
+            <TextView
+                android:text="@string/arp_table_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textAlignment="center"
+                android:layout_alignParentTop="true"
+                android:textColor="@color/whiteText"
+                android:background="@color/colorPrimaryDark"
+                android:id="@+id/arp_table_title" />
+
+            <!-- This is the list view for the ARP Table,
+            which will list the actual information in the table-->
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="78dp"
+                android:layout_below="@+id/arp_table_title"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/whiteText" />
+
+        </RelativeLayout>
+
+        <!-- This is the relative layout for the forwarding Table. -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_below="@id/arpTableRelativeLayout"
+            android:layout_marginTop="@dimen/inner_table_seperators"
+            android:id="@+id/forwardingTableRelativeLayout" >
+
+            <!-- This is the title bar for the forwarding Table. -->
+            <TextView
+                android:text="@string/forwarding_table_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textAlignment="center"
+                android:layout_alignParentTop="true"
+                android:textColor="@color/whiteText"
+                android:background="@color/colorPrimaryDark"
+                android:id="@+id/forwardingTitleBar" />
+
+            <!-- This is the list view for the forwarding Table,
+            which will list the actual information in the table-->
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="78dp"
+                android:layout_below="@+id/forwardingTitleBar"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/whiteText" />
+
+        </RelativeLayout>
+
+        <!-- This is the relative layout for the routing Table. -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_below="@id/forwardingTableRelativeLayout"
+            android:layout_marginTop="@dimen/inner_table_seperators">
+
+            <!-- This is the title bar for the routing Table. -->
+            <TextView
+                android:text="@string/routing_table_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textAlignment="center"
+                android:layout_alignParentTop="true"
+                android:textColor="@color/whiteText"
+                android:background="@color/colorPrimaryDark"
+                android:id="@+id/routingTitleBar" />
+
+            <!-- This is the list view for the routing Table,
+            which will list the actual information in the table-->
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="78dp"
+                android:layout_below="@id/routingTitleBar"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/whiteText" />
+        </RelativeLayout>
+    </RelativeLayout>
 </RelativeLayout>
