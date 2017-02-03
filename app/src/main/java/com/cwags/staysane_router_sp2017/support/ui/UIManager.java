@@ -1,8 +1,11 @@
-package com.cwags.staysane_router_sp2017.support;
+package com.cwags.staysane_router_sp2017.support.ui;
 
 import android.app.Activity;
 import android.content.Context;
 import android.widget.Toast;
+
+import com.cwags.staysane_router_sp2017.support.BootLoader;
+import com.cwags.staysane_router_sp2017.support.ParentActivity;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -16,6 +19,7 @@ import java.util.Observer;
  */
 
 public class UIManager implements Observer{
+
     //The parent activity, which we get once it's ready
     private Activity parentActivity;
 
@@ -30,15 +34,15 @@ public class UIManager implements Observer{
     }
 
     //This will display toast messages on the screen
-    public void raiseToast(String message, int displayTime) {
+    public void displayMessage(String message, int displayTime) {
         //Display a toast in the current context, with the message and display time we recieved
         Toast.makeText(context,message,displayTime).show();
     }
 
-    //Simpler raiseToast overload method so that other classes don't have to specify time
-    public void raiseToast(String message){
+    //Simpler displayMessage overload method so that other classes don't have to specify time
+    public void displayMessage(String message){
         //Display a toast with the message we recieved
-        raiseToast(message,Toast.LENGTH_LONG);
+        displayMessage(message,Toast.LENGTH_LONG);
     }
 
     //Allows access to any on-screen widgets
