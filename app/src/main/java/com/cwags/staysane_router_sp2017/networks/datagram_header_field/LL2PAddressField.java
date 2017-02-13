@@ -71,6 +71,8 @@ public class LL2PAddressField implements DatagramHeaderField {
         return toHexString();
     }
 
+
+
     //Method that converts this address to a Hex String
     @Override
     public String toHexString() {
@@ -93,5 +95,10 @@ public class LL2PAddressField implements DatagramHeaderField {
         //Convert the hexString to Ascii
         asciiValue = Utilities.convertToAscii(asciiValue);
         return asciiValue;
+    }
+
+    //Getter for the address
+    public Integer getAddress() {
+        return address;
     }
 }

@@ -23,6 +23,12 @@ public class Constants implements Observer {
     public static String routerName = new String("Cwags"); //This is the name of the router
     public static String logTag = new String("CWAGS: "); //This is the name that will appear in log messages
 
+    //LL2P Address for this router
+    final public static int LL2P_ADDRESS_NAME = 0xBADB01;
+
+    //Port Number for UDP Packets
+    final public static int UDP_PORT = 49999;
+
     // Byte lengths of each field in the LL2P
     final public static int LL2P_DEST_ADDRESS_OFFSET = 0;
     final public static int LL2P_ADDRESS_LENGTH = 3;
@@ -37,6 +43,11 @@ public class Constants implements Observer {
     final public static int LL2P_DESTINATION_ADDRESS = 22;
     final public static int LL2P_CRC = 23;
     final public static int LL2P_TYPE = 25;
+
+    //Unique identifiers for types of table records
+    final public static int ADJACENCY_RECORD = 26;
+    final public static int ARP_RECORD = 27;
+    final public static int ROUTING_RECORD = 28;
 
     // Valid types for LL2P Frames
     final public static int LL2P_TYPE_IS_LL3P = 0x8001;

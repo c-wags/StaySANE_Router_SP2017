@@ -36,8 +36,7 @@ public class DatagramPayloadField implements DatagramHeaderField {
         //Create the correct payload type based on which payload type is passed
         switch(payloadType) {
             //Checking for Text Payload type
-            case LL2P_TYPE_IS_TEXT: packet = new TextDatagram(text);
-                break;
+
             case LL2P_TYPE_IS_ARP_REPLY:
             case LL2P_TYPE_IS_ARP_REQUEST:
             case LL2P_TYPE_IS_ECHO_REPLY:
@@ -45,8 +44,9 @@ public class DatagramPayloadField implements DatagramHeaderField {
             case LL2P_TYPE_IS_LL3P:
             case LL2P_TYPE_IS_LRP:
             case LL2P_TYPE_IS_RESERVED:
-                packet = null;
-               break;
+            case LL2P_TYPE_IS_TEXT:
+                packet = new TextDatagram(text);
+                break;
             default: packet = null;
         }
     }

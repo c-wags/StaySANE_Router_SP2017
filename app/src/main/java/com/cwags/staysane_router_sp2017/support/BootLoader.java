@@ -4,14 +4,18 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.cwags.staysane_router_sp2017.networks.Constants;
+import com.cwags.staysane_router_sp2017.networks.daemon.LL1Daemon;
 import com.cwags.staysane_router_sp2017.networks.datagram.LL2PFrame;
 import com.cwags.staysane_router_sp2017.networks.datagram.TextDatagram;
 import com.cwags.staysane_router_sp2017.networks.datagram_header_field.CRC;
 import com.cwags.staysane_router_sp2017.networks.datagram_header_field.DatagramPayloadField;
 import com.cwags.staysane_router_sp2017.networks.datagram_header_field.LL2PAddressField;
 import com.cwags.staysane_router_sp2017.networks.datagram_header_field.LL2PTypeField;
+import com.cwags.staysane_router_sp2017.networks.table.Table;
+import com.cwags.staysane_router_sp2017.networks.tablerecord.AdjacencyRecord;
 import com.cwags.staysane_router_sp2017.support.ui.UIManager;
 
+import java.net.InetAddress;
 import java.util.ConcurrentModificationException;
 import java.util.Observable;
 
@@ -40,24 +44,22 @@ public class BootLoader extends Observable {
         addObserver(Constants.getInstance());
         addObserver(UIManager.getInstance());
         addObserver(FrameLogger.getInstance());
+        addObserver(LL1Daemon.getInstance());
 
         //Notifying the observers that the router is booted
         setChanged();
         notifyObservers();
 
         //Testing the router
-        if(testRouterComponents()) {
-            Log.i(Constants.logTag, "Router booted successfully!");
-            UIManager.getInstance().displayMessage("Router booted successfully!");
-        }
-        else{
-            Log.i(Constants.logTag, "Router failed to boot");
-            UIManager.getInstance().displayMessage("Router failed to boot");
-        }
+        testRouterComponents();
+
+        Log.i(Constants.logTag, "Router booted successfully!");
+        UIManager.getInstance().displayMessage("Router booted successfully!");
     }
 
+
     //Method for testing the functionality of the router
-    private boolean testRouterComponents(){
+    private void testRouterComponents(){
 
         //Create all of the fields required to create a datagram
         TextDatagram testTextDatagram = new TextDatagram("Hello user");
@@ -70,7 +72,28 @@ public class BootLoader extends Observable {
         LL2PFrame testLL2PDatagram = new LL2PFrame(testDestinationAddress,testSourceAddress,
                 testType, testPayload, testCRC);
         //Test the byteArray constructor for the LL2P Frame Class
-        LL2PFrame testFrameBytes = new LL2PFrame("0011229988778008hello0000".getBytes());
+        LL2PFrame testFrameBytes = new LL2PFrame("1122339988778008hello0000".getBytes());
+
+        //Testing table class
+        LL1Daemon ll1 = LL1Daemon.getInstance();
+        AdjacencyRecord testRecord1 = new AdjacencyRecord(GetIPAddress.getInstance().getInetAddress("10.30.34.175"),0x314159);
+        AdjacencyRecord testRecord2 = new AdjacencyRecord(GetIPAddress.getInstance().getInetAddress("10.30.34.175"),0x112233);
+        Table table = new Table();
+        table.addItem(testRecord1);
+        table.addItem(testRecord2);
+        Log.d(Constants.logTag,"Records added to table!");
+        table.removeItem(0x112233);
+        Log.d(Constants.logTag,"Record removed from table!");
+
+        //Testing LL1Daemon
+        ll1.addAdjacency("314159","10.30.34.175");
+        AdjacencyRecord testRecord3 = ll1.getAdjacencyRecord(0x314159);
+        Log.d(Constants.logTag, "Record found in LL1 table: " + testRecord3.toString());
+        ll1.removeAdjacency(testRecord3);
+
+        //Test sending a frame
+        ll1.addAdjacency("112233" , "10.30.34.175");
+        ll1.sendFrame(testFrameBytes);
 
         //Test individual field methods
         Log.e(Constants.logTag,"TextDatagram toHex: " + testTextDatagram.toHexString());
@@ -84,7 +107,5 @@ public class BootLoader extends Observable {
         UIManager.getInstance().displayMessage(testLL2PDatagram.toProtocolExplanationString());
 
 
-        //The basic datagram functionality is working
-        return true;
     }
 }

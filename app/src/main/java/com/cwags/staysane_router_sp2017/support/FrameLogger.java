@@ -49,7 +49,7 @@ public class FrameLogger extends Observable implements Observer{
             // addObserver(SnifferUI.getInstance());
         }
 
-        else if(observable.getClass() == LL1Daemon.class){
+        else if(observable.getClass() == LL1Daemon.class & o.getClass() == LL2PFrame.class){
             frameList.add( (LL2PFrame) o); //Add the recasted object (an LL2P frame) to our list
             setChanged();
             notifyObservers(); //Notify the SnifferUI that our frame list has changed

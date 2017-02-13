@@ -1,5 +1,9 @@
 package com.cwags.staysane_router_sp2017.support;
 
+import com.cwags.staysane_router_sp2017.networks.Constants;
+
+import java.util.Calendar;
+
 /**
  * Name: Utilities Class
  *
@@ -8,6 +12,10 @@ package com.cwags.staysane_router_sp2017.support;
  */
 
 public class Utilities {
+
+    //The base date the program has started (calculated from 1970)
+    public static int baseDateSeconds = (int)Calendar.getInstance().getTimeInMillis()/1000;
+
     //This is our actual instance that exists as the Uitilies object
     private static Utilities ourInstance = new Utilities();
 
@@ -66,5 +74,10 @@ public class Utilities {
             myString += Integer.toHexString(characterInt);
         }
         return myString;
+    }
+
+    //Returns the age in seconds from the base date
+    public static int getTimeInSeconds(){
+        return (int) (Calendar.getInstance().getTimeInMillis()/1000 - baseDateSeconds);
     }
 }

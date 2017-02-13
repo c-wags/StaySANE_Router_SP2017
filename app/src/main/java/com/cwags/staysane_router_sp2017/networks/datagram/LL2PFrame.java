@@ -81,11 +81,11 @@ public class LL2PFrame implements Datagram {
     //Create a transmission string for this frame
     @Override
     public String toTransmissionString() {
-        return destinationAddress.toAsciiString() + " " + sourceAddress.toAsciiString() + " " +
-                type.toAsciiString() + " " + payload.toAsciiString() + " " + crc.toAsciiString();
+        return destinationAddress.toTransmissionString() +  sourceAddress.toTransmissionString() +
+                type.toTransmissionString() + payload.toTransmissionString() + crc.toTransmissionString();
     }
 
-    //Show the hex values of all fields
+    //Show the hex values of all fields TODO verify what HExString should be
     @Override
     public String toHexString() {
         return destinationAddress.toHexString() + " " + sourceAddress.toHexString() + " " +
@@ -111,6 +111,8 @@ public class LL2PFrame implements Datagram {
                 + payload.toTransmissionString() + " in LL2P Frame";
     }
 
+    //
+
     // ************* Getters for all fields *************
     public LL2PAddressField getDestinationAddress() {
         return destinationAddress;
@@ -130,5 +132,9 @@ public class LL2PFrame implements Datagram {
 
     public CRC getCrc() {
         return crc;
+    }
+
+    public Integer getDestinationValue (){
+        return destinationAddress.getAddress();
     }
 }
