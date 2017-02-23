@@ -44,7 +44,7 @@ public class AdjacencyRecord extends TableRecord {
     //Makes the record into an easily readable format
     @Override
     public String toString(){
-        return "LL2P Address: 0x" + ll2pAddress +
+        return "LL2P Address: 0x" + Integer.toHexString(ll2pAddress) +
                 "; IP Address: " + inAddress;
     }
 

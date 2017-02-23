@@ -11,4 +11,9 @@
     <string name="forwarding_table_title">Forwarding Table</string>
     <string name="routing_table_title">Routing Table</string>
     <string name="IPMenuItem">Show IP Address</string>
+    <string name="AddAdjacencyTableMenuItem">Add Adjacency</string>
+    <string name="LL2PAdjacencyDialogTitle">Enter Hex LL2P Address</string>
+    <string name="LL2PAdjacencyDialogHint">BEEEEF</string>
+    <string name="IPAdjacencyDialogTitle">Enter IP Address for Adjacency</string>
+    <string name="IPAdjacencyDialogHint">10.30.5.209</string>
 </resources>

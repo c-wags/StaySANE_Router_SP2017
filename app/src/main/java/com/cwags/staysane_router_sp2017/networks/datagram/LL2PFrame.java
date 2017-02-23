@@ -48,30 +48,24 @@ public class LL2PFrame implements Datagram {
         */
         destinationAddress = (LL2PAddressField) (Factory.getInstance().getDatagramHeaderField(Constants.LL2P_DESTINATION_ADDRESS,
                 frameString.substring((2*Constants.LL2P_DEST_ADDRESS_OFFSET),
-                        (2*(Constants.LL2P_ADDRESS_LENGTH+Constants.LL2P_DEST_ADDRESS_OFFSET)))));
-
-        type = (LL2PTypeField)(Factory.getInstance().getDatagramHeaderField(Constants.LL2P_TYPE,
-                frameString.substring((2*Constants.LL2P_TYPE_OFFSET),
-                        (2*(Constants.LL2P_TYPE_LENGTH+Constants.LL2P_TYPE_OFFSET)))));
+                        (2*(Constants.LL2P_SRC_ADDRESS_OFFSET)))));
 
         sourceAddress = (LL2PAddressField) (Factory.getInstance().getDatagramHeaderField(Constants.LL2P_SOURCE_ADDRESS,
                 frameString.substring((2*Constants.LL2P_SRC_ADDRESS_OFFSET),
-                        (2*(Constants.LL2P_ADDRESS_LENGTH+Constants.LL2P_SRC_ADDRESS_OFFSET)))));
+                        (2*(Constants.LL2P_TYPE_OFFSET)))));
 
-        payload = makePayloadField(type,frameString.substring((2*Constants.LL2P_PAYLOAD_OFFSET),
-                        (((frameString.length() - 2*Constants.LL2P_CRC_LENGTH)+2*Constants.LL2P_PAYLOAD_OFFSET)-2*Constants.LL2P_PAYLOAD_OFFSET)));
+        type = (LL2PTypeField)(Factory.getInstance().getDatagramHeaderField(Constants.LL2P_TYPE,
+                frameString.substring((2*Constants.LL2P_TYPE_OFFSET),
+                        (2*(Constants.LL2P_PAYLOAD_OFFSET)))));
+
+        payload = new DatagramPayloadField(type.getType(), frameString.substring((2*Constants.LL2P_PAYLOAD_OFFSET),
+                (((frameString.length() - 2*Constants.LL2P_CRC_LENGTH)))));
 
         crc = (CRC)(Factory.getInstance().getDatagramHeaderField(Constants.LL2P_CRC,
                 frameString.substring(((frameString.length() - 2*Constants.LL2P_CRC_LENGTH)),
-                        (2*(Constants.LL2P_CRC_LENGTH)+(frameString.length() - 2*Constants.LL2P_CRC_LENGTH)))));
+                        frameString.length())));
     }
 
-    //Utility to easily add a payload
-    private DatagramPayloadField makePayloadField(LL2PTypeField typeField, String contents){
-
-        //create the required payload
-        return new DatagramPayloadField(Integer.valueOf(typeField.toString()),contents);
-    }
 
     @Override
     public String toString(){
@@ -85,11 +79,17 @@ public class LL2PFrame implements Datagram {
                 type.toTransmissionString() + payload.toTransmissionString() + crc.toTransmissionString();
     }
 
-    //Show the hex values of all fields TODO verify what HExString should be
+    //Show the hex values of all fields
     @Override
     public String toHexString() {
-        return destinationAddress.toHexString() + " " + sourceAddress.toHexString() + " " +
-                type.toHexString() + " " + payload.toHexString() + " " + crc.toHexString();
+        return destinationAddress.toHexString() + sourceAddress.toHexString() +
+                type.toHexString() + payload.toHexString() + crc.toHexString();
+    }
+
+    //Show the ascii values of all fields
+    public String toAsciiString() {
+        return destinationAddress.toAsciiString() + sourceAddress.toAsciiString() +
+                type.toAsciiString() + payload.toAsciiString() + crc.toAsciiString();
     }
 
     //Show the full explanation of this protocol, and all fields
@@ -108,7 +108,7 @@ public class LL2PFrame implements Datagram {
     @Override
     public String toSummaryString() {
         return destinationAddress.toString() + " | " + sourceAddress.toString() + " | "
-                + payload.toTransmissionString() + " in LL2P Frame";
+                + payload.toTransmissionString();
     }
 
     //

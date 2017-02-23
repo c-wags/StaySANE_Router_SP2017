@@ -60,7 +60,7 @@ public class LL2PTypeField implements DatagramHeaderField {
     //Show the value of the type
     @Override
     public String toTransmissionString() {
-        return type.toString();
+        return toHexString();
     }
 
     //Method that converts this type to a Hex String (with padded zeros)
@@ -81,5 +81,10 @@ public class LL2PTypeField implements DatagramHeaderField {
     public String toAsciiString() {
         //Uses the utility convertToAscii to return the ascii value of the hex type
         return Utilities.convertToAscii(Integer.toHexString(type));
+    }
+
+    //Getter for the type
+    public Integer getType() {
+        return type;
     }
 }

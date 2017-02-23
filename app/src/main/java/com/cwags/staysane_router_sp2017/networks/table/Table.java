@@ -94,4 +94,10 @@ public class Table extends Observable
         notifyObservers();
     }
 
+    @Override
+    public String toString() {
+        return "Table{" +
+                table +
+                "}"; //TODO Is this right?
+    }
 }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    //This is the text above the LL2P EditText widget.
+    <TextView
+        android:text="@string/LL2PAdjacencyDialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/widget_padding"
+        android:textSize="12dp"
+        android:id="@+id/ll2pAddAdjacencyHeader" />
+
+    //This is the EditText widget for the LL2P Address
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textCapCharacters"
+        android:digits="0123456789ABCDEF"
+        android:ems="10"
+        android:padding="@dimen/widget_padding"
+        android:hint="@string/LL2PAdjacencyDialogHint"
+        android:id="@+id/ll2pAddAdjacencyEntry" />
+
+    //This is the text above the IP EditText widget.
+    <TextView
+        android:text="@string/IPAdjacencyDialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/widget_padding"
+        android:textSize="12dp"
+        android:id="@+id/IPAddAdjacencyHeader" />
+
+    //This is the EditText widget for the IP Address
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:digits="0123456789."
+        android:ems="10"
+        android:padding="@dimen/widget_padding"
+        android:hint="@string/IPAdjacencyDialogHint"
+        android:id="@+id/IPAddAdjacencyEntry" />
+
+    //Button to add an Adjacency
+    <Button
+        android:text="Add Adjacency "
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addAdjacencyButton" />
+
+    //Button to cancel adding an adjacency
+    <Button
+        android:text="Cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cancelButton" />
+</LinearLayout>

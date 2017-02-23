@@ -13,6 +13,7 @@ import com.cwags.staysane_router_sp2017.networks.datagram_header_field.LL2PAddre
 import com.cwags.staysane_router_sp2017.networks.datagram_header_field.LL2PTypeField;
 import com.cwags.staysane_router_sp2017.networks.table.Table;
 import com.cwags.staysane_router_sp2017.networks.tablerecord.AdjacencyRecord;
+import com.cwags.staysane_router_sp2017.support.ui.SnifferUI;
 import com.cwags.staysane_router_sp2017.support.ui.UIManager;
 
 import java.net.InetAddress;
@@ -43,8 +44,10 @@ public class BootLoader extends Observable {
         //Adding observers to be notified by this BootLoader observable
         addObserver(Constants.getInstance());
         addObserver(UIManager.getInstance());
+        addObserver(UIManager.getInstance().getTableUI());
         addObserver(FrameLogger.getInstance());
         addObserver(LL1Daemon.getInstance());
+        addObserver(UIManager.getInstance().getSnifferUI());
 
         //Notifying the observers that the router is booted
         setChanged();

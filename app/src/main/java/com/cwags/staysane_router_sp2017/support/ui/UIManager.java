@@ -26,11 +26,19 @@ public class UIManager implements Observer{
     //This is the context class that provides access to widgets
     private Context context;
 
+    //The tableUI component
+    private TableUI tableUI;
+
+    //The sniffer UI componenet
+    private SnifferUI snifferUI;
+
     //This is our instance of this singleton class
     private static UIManager ourInstance = new UIManager();
 
     //The constructor for this class
     private UIManager() {
+        tableUI = new TableUI();
+        snifferUI = new SnifferUI();
     }
 
     //This will display toast messages on the screen
@@ -73,5 +81,14 @@ public class UIManager implements Observer{
 
     }
 
+    //Getter for Table UI
+    public TableUI getTableUI() {
+        return tableUI;
+    }
 
+    //Getter for Sniffer UI
+
+    public SnifferUI getSnifferUI() {
+        return snifferUI;
+    }
 }

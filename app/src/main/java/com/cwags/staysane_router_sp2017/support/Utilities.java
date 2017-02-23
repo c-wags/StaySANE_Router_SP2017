@@ -24,7 +24,6 @@ public class Utilities {
         return ourInstance;
     }
 
-    // TODO construct this
     //The constructor for the Uitilities class
     private Utilities() {
     }
@@ -48,13 +47,18 @@ public class Utilities {
     //Method to convert hex characters to ascii characters
     public static String convertToAscii(String hexString){
         String myString = ""; //String that will be the ascii value of the hexString
-        char character; //Temporary holder for each character in the ascii string
+        int bytes; //Temporary holder for each character in the ascii string
         int valueOfHexString = Integer.valueOf(hexString,16);
 
         //Turning each hex pair into its ascii representation
         while(valueOfHexString>0){
-            character = (char)(valueOfHexString % 256);
-            myString = character + myString;
+            bytes = (valueOfHexString % 256);
+            if(31 < bytes && bytes < 128){
+                myString = Character.toString((char)bytes) + myString;
+            }
+            else{
+                myString += ".";
+            }
             valueOfHexString = valueOfHexString/256;
         }
 

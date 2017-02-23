@@ -83,7 +83,6 @@ public class DatagramPayloadField implements DatagramHeaderField {
         return packet.toProtocolExplanationString();
     }
 
-    //TODO clarify this
     //Method that converts this datagram payload to an AsciiString
     @Override
     public String toAsciiString() {

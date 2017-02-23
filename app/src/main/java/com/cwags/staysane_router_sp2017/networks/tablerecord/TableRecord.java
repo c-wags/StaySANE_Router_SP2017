@@ -29,7 +29,6 @@ public class TableRecord implements TableRecordInterface {
     //record is greater than the one passed.
     public int compareTo(TableRecordInterface tableRecord) {
 
-        //TODO check on this
         return getKey().compareTo(tableRecord.getKey());
     }
 

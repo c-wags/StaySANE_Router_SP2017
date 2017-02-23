@@ -126,7 +126,6 @@ public class LL1Daemon extends Observable implements Observer{
     @Override
     public void update(Observable observable, Object o) {
 
-        //TODO the rest of this
         if(observable.getClass() == BootLoader.class) {
 
             //Initialize our fields
@@ -215,7 +214,6 @@ public class LL1Daemon extends Observable implements Observer{
         String frameToSend = ll2p.toTransmissionString();
 
         uiManager.displayMessage("Sending Packet");
-        boolean validIP = true;
 
         InetAddress IPAddress = null;
 
@@ -223,14 +221,6 @@ public class LL1Daemon extends Observable implements Observer{
         try {
             AdjacencyRecord record = (AdjacencyRecord) adjacencyTable.getItem(ll2p.getDestinationValue());
             IPAddress = record.getInAddress();
-        }
-        catch(Exception e){ //TODO put in LabException
-            validIP = false;
-        }
-
-
-        if (validIP) {
-
             //Create packet to send
             DatagramPacket sendPacket = new DatagramPacket(frameToSend.getBytes(),
                     frameToSend.length(),
@@ -238,10 +228,13 @@ public class LL1Daemon extends Observable implements Observer{
                     Constants.UDP_PORT);
             //Send the frame
             new sendUDPPacket().execute(new PacketInformation(sendSocket,sendPacket));
+            setChanged();
+            notifyObservers(ll2p);
         }
+        catch(Exception e){
 
+        }
     }
-
     //Method to get a record from the table
     public AdjacencyRecord getAdjacencyRecord(Integer matchingKey){
         AdjacencyRecord recordToReturn = null;

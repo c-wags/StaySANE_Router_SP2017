@@ -35,7 +35,6 @@ public class Factory {
     //Our instance of this Singleton Class
     private static Factory ourInstance = new Factory();
 
-    //TODO construct this
     // Constructor for this class
     private Factory() {
     }

@@ -7,7 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.cwags.staysane_router_sp2017.networks.Constants;
+import com.cwags.staysane_router_sp2017.networks.daemon.LL1Daemon;
 import com.cwags.staysane_router_sp2017.support.BootLoader;
+import com.cwags.staysane_router_sp2017.support.ui.AddAdjacencyDialog;
 import com.cwags.staysane_router_sp2017.support.ui.UIManager;
 
 /**
@@ -17,7 +19,7 @@ import com.cwags.staysane_router_sp2017.support.ui.UIManager;
  * entire Android Application
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AddAdjacencyDialog.AdjacencyPairListener{
 
     //This gets called when the application gets started, restarts, or resumed.
     @Override
@@ -57,6 +59,17 @@ public class MainActivity extends AppCompatActivity {
             UIManager.getInstance().displayMessage("Your IP Address is "+ Constants.IP_ADDRESS);
         }
 
+        //Add an adjacency when the add adjacency menu item is pressed
+        if(item.getItemId() == R.id.addAjacency){
+            AddAdjacencyDialog dialog = new AddAdjacencyDialog();
+            dialog.show(getFragmentManager(),"add_adjacency_dialog");
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFinishedEditDialog(String ipAddress, String ll2pAddress) {
+        LL1Daemon.getInstance().addAdjacency(ll2pAddress,ipAddress);
     }
 }

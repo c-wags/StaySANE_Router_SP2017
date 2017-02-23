@@ -2,6 +2,7 @@ package com.cwags.staysane_router_sp2017.support;
 
 import com.cwags.staysane_router_sp2017.networks.daemon.LL1Daemon;
 import com.cwags.staysane_router_sp2017.networks.datagram.LL2PFrame;
+import com.cwags.staysane_router_sp2017.support.ui.UIManager;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -44,9 +45,8 @@ public class FrameLogger extends Observable implements Observer{
         //If we receive an update from the Bootloader
         if(observable.getClass() == BootLoader.class) {
 
-            // TODO implement the SnifferUI
             // Once the router is booted, add the SnifferUI to the list of observers
-            // addObserver(SnifferUI.getInstance());
+            addObserver(UIManager.getInstance().getSnifferUI());
         }
 
         else if(observable.getClass() == LL1Daemon.class & o.getClass() == LL2PFrame.class){
@@ -54,6 +54,5 @@ public class FrameLogger extends Observable implements Observer{
             setChanged();
             notifyObservers(); //Notify the SnifferUI that our frame list has changed
         }
-
     }
 }
