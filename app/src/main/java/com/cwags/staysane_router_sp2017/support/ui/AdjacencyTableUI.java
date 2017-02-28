@@ -6,7 +6,9 @@ import android.widget.AdapterView;
 
 import com.cwags.staysane_router_sp2017.networks.Constants;
 import com.cwags.staysane_router_sp2017.networks.daemon.LL1Daemon;
+import com.cwags.staysane_router_sp2017.networks.daemon.LL2PDaemon;
 import com.cwags.staysane_router_sp2017.networks.datagram.LL2PFrame;
+import com.cwags.staysane_router_sp2017.networks.datagram_header_field.LL2PAddressField;
 import com.cwags.staysane_router_sp2017.networks.table.Table;
 import com.cwags.staysane_router_sp2017.networks.tablerecord.AdjacencyRecord;
 
@@ -38,13 +40,8 @@ public class AdjacencyTableUI extends SingleTableUI {
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             adjRecord = (AdjacencyRecord) tableList.get(i);
             //Create Frame to send
-            String frameString = Integer.toHexString(adjRecord.getLl2pAddress()) + Integer.toHexString(Constants.LL2P_ADDRESS_NAME) + Integer.toHexString(Constants.LL2P_TYPE_IS_ECHO_REQUEST) + "Echo Contents" + "0000";
-            byte[] frameByteString = frameString.getBytes();
-            LL2PFrame adjFrame = new LL2PFrame(frameByteString);
-
-            //Send the frame
-            LL1Daemon.getInstance().sendFrame(adjFrame);
-            UIManager.getInstance().displayMessage("Frame sent to: " + adjRecord.getLl2pAddress());
+            LL2PAddressField destination = new LL2PAddressField(adjRecord.getLl2pAddress(),false);
+            LL2PDaemon.getInstance().sendEchoRequest(destination);
         }
     };
 

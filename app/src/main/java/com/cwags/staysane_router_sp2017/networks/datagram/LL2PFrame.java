@@ -137,4 +137,6 @@ public class LL2PFrame implements Datagram {
     public Integer getDestinationValue (){
         return destinationAddress.getAddress();
     }
+
+    public Integer getTypeValue () { return type.getType();};
 }

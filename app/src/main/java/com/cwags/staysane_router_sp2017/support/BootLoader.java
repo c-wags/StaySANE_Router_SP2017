@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.cwags.staysane_router_sp2017.networks.Constants;
 import com.cwags.staysane_router_sp2017.networks.daemon.LL1Daemon;
+import com.cwags.staysane_router_sp2017.networks.daemon.LL2PDaemon;
 import com.cwags.staysane_router_sp2017.networks.datagram.LL2PFrame;
 import com.cwags.staysane_router_sp2017.networks.datagram.TextDatagram;
 import com.cwags.staysane_router_sp2017.networks.datagram_header_field.CRC;
@@ -47,6 +48,7 @@ public class BootLoader extends Observable {
         addObserver(UIManager.getInstance().getTableUI());
         addObserver(FrameLogger.getInstance());
         addObserver(LL1Daemon.getInstance());
+        addObserver(LL2PDaemon.getInstance());
         addObserver(UIManager.getInstance().getSnifferUI());
 
         //Notifying the observers that the router is booted

@@ -6,6 +6,8 @@ import com.cwags.staysane_router_sp2017.networks.datagram_header_field.DatagramH
 import com.cwags.staysane_router_sp2017.networks.datagram_header_field.DatagramPayloadField;
 import com.cwags.staysane_router_sp2017.networks.datagram_header_field.LL2PAddressField;
 import com.cwags.staysane_router_sp2017.networks.datagram_header_field.LL2PTypeField;
+import com.cwags.staysane_router_sp2017.networks.datagram_header_field.TextPayload;
+import com.cwags.staysane_router_sp2017.networks.tablerecord.ARPRecord;
 import com.cwags.staysane_router_sp2017.networks.tablerecord.AdjacencyRecord;
 import com.cwags.staysane_router_sp2017.networks.tablerecord.TableRecordInterface;
 
@@ -68,8 +70,9 @@ public class Factory {
             case LL2P_TYPE_IS_LL3P:
             case LL2P_TYPE_IS_LRP:
             case LL2P_TYPE_IS_RESERVED:
-            case LL2P_TYPE_IS_TEXT:
                 return new DatagramPayloadField(FieldValue,contents);
+            case LL2P_TYPE_IS_TEXT:
+                return new TextPayload(contents);
             default: return null;
         }
     }
@@ -77,11 +80,10 @@ public class Factory {
     //Returns an empty tableRecord based on the unique ID, which then needs its fields set to values
     public TableRecordInterface getTableRecord(int recordIdentifier){
 
-        //TODO implement this factory after arp and routing table are created
         switch(recordIdentifier){
             case Constants.ADJACENCY_RECORD: return new AdjacencyRecord();
-            //case Constants.ARP_RECORD: return new ArpRecord();
-            //case Constants.ROUTING_RECORD: return new RoutingTable();
+            //TODO case Constants.ARP_RECORD: return new ARPRecord();
+            //TODO case Constants.ROUTING_RECORD: return new RoutingTable();
             default: return null;
         }
     }

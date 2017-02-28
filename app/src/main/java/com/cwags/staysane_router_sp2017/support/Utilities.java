@@ -53,6 +53,7 @@ public class Utilities {
         //Turning each hex pair into its ascii representation
         while(valueOfHexString>0){
             bytes = (valueOfHexString % 256);
+            //Checking to see if the character is a printable character. If not, print a '.'
             if(31 < bytes && bytes < 128){
                 myString = Character.toString((char)bytes) + myString;
             }

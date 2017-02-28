@@ -59,7 +59,7 @@ public class LL1Daemon extends Observable implements Observer{
     private Factory factory;
 
     //Reference to the singleton daemon class that handles layer 2 processing
-    // TODO private LL2PDaemon ll2pDaemon;
+    private LL2PDaemon ll2pDaemon;
 
 
     //A private Async class to send packets out of the UI thread.
@@ -103,8 +103,8 @@ public class LL1Daemon extends Observable implements Observer{
             setChanged();
             notifyObservers(ll2PFrame);
 
-            //TODO pass LL2P Frame to LL2PDaemon
-            //ll2pDaemon.processLL2PFrame(ll2pFrame);
+
+            ll2pDaemon.processLL2PFrame(ll2PFrame);
 
             //Sprin off new thread to listen for packets
             new receiveUDPPacket().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,receiveSocket);
@@ -136,6 +136,8 @@ public class LL1Daemon extends Observable implements Observer{
             factory = Factory.getInstance();
 
             uiManager = UIManager.getInstance();
+
+            ll2pDaemon = LL2PDaemon.getInstance();
 
             //Add observers once the Bootloader sends that the router is booted
             addObserver(FrameLogger.getInstance());
@@ -213,9 +215,7 @@ public class LL1Daemon extends Observable implements Observer{
 
         String frameToSend = ll2p.toTransmissionString();
 
-        uiManager.displayMessage("Sending Packet");
-
-        InetAddress IPAddress = null;
+        InetAddress IPAddress;
 
         //Try getting the ipAddress from the adjacency table using the frames destination address
         try {
@@ -232,9 +232,10 @@ public class LL1Daemon extends Observable implements Observer{
             notifyObservers(ll2p);
         }
         catch(Exception e){
-
+            //TODO implement exception
         }
     }
+
     //Method to get a record from the table
     public AdjacencyRecord getAdjacencyRecord(Integer matchingKey){
         AdjacencyRecord recordToReturn = null;

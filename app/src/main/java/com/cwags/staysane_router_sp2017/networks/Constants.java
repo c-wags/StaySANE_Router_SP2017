@@ -42,7 +42,7 @@ public class Constants implements Observer {
     final public static int LL2P_SOURCE_ADDRESS = 21;
     final public static int LL2P_DESTINATION_ADDRESS = 22;
     final public static int LL2P_CRC = 23;
-    final public static int LL2P_TYPE = 25;
+    final public static int LL2P_TYPE = 25; //TODO maybe fix the constants for fields to be sequential
 
     //Unique identifiers for types of table records
     final public static int ADJACENCY_RECORD = 26;
