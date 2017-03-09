@@ -2,6 +2,7 @@ package com.cwags.staysane_router_sp2017.networks.datagram;
 
 import com.cwags.staysane_router_sp2017.networks.Constants;
 import com.cwags.staysane_router_sp2017.networks.datagram_header_field.CRC;
+import com.cwags.staysane_router_sp2017.networks.datagram_header_field.DatagramHeaderField;
 import com.cwags.staysane_router_sp2017.networks.datagram_header_field.DatagramPayloadField;
 import com.cwags.staysane_router_sp2017.networks.datagram_header_field.LL2PAddressField;
 import com.cwags.staysane_router_sp2017.networks.datagram_header_field.LL2PTypeField;
@@ -58,8 +59,8 @@ public class LL2PFrame implements Datagram {
                 frameString.substring((2*Constants.LL2P_TYPE_OFFSET),
                         (2*(Constants.LL2P_PAYLOAD_OFFSET)))));
 
-        payload = new DatagramPayloadField(type.getType(), frameString.substring((2*Constants.LL2P_PAYLOAD_OFFSET),
-                (((frameString.length() - 2*Constants.LL2P_CRC_LENGTH)))));
+        payload = (DatagramPayloadField)(Factory.getInstance().getDatagramHeaderField(type.getType(), frameString.substring((2*Constants.LL2P_PAYLOAD_OFFSET),
+                (((frameString.length() - 2*Constants.LL2P_CRC_LENGTH))))));
 
         crc = (CRC)(Factory.getInstance().getDatagramHeaderField(Constants.LL2P_CRC,
                 frameString.substring(((frameString.length() - 2*Constants.LL2P_CRC_LENGTH)),

@@ -16,7 +16,7 @@ public class TableRecord implements TableRecordInterface {
 
     //Constructor that simply called the updateTime() method to set the value of lastTimeTouched
     TableRecord(){
-
+        updateTime();
     }
 
     //Sets the lastTimeTouched to the current time. Uses the Utilities class method to calculate.
@@ -32,7 +32,6 @@ public class TableRecord implements TableRecordInterface {
         return getKey().compareTo(tableRecord.getKey());
     }
 
-
     @Override
     public Integer getKey() {
         return null;
@@ -40,6 +39,11 @@ public class TableRecord implements TableRecordInterface {
 
     @Override
     public Integer getAgeInSeconds() {
-        return null;
+        return Utilities.getTimeInSeconds() - lastTimeTouched;
+    }
+
+    //Resets age in seconds to 0
+    public void resetAge(){
+        lastTimeTouched = Utilities.getTimeInSeconds();
     }
 }

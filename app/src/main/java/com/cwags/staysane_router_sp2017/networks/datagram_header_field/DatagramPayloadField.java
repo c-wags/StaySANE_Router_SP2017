@@ -29,28 +29,6 @@ public class DatagramPayloadField implements DatagramHeaderField {
         packet = pkt;
     }
 
-    // Constructor that creates a payload object of the type passed in, using the passed in string
-    // to initialize it.
-    public DatagramPayloadField(int payloadType, String text){
-
-        //Create the correct payload type based on which payload type is passed
-        switch(payloadType) {
-            //Checking for Text Payload type
-
-            case LL2P_TYPE_IS_ARP_REPLY:
-            case LL2P_TYPE_IS_ARP_REQUEST:
-            case LL2P_TYPE_IS_ECHO_REPLY:
-            case LL2P_TYPE_IS_ECHO_REQUEST:
-            case LL2P_TYPE_IS_LL3P:
-            case LL2P_TYPE_IS_LRP:
-            case LL2P_TYPE_IS_RESERVED:
-            case LL2P_TYPE_IS_TEXT:
-                packet = new TextDatagram(text);
-                break;
-            default: packet = null;
-        }
-    }
-
     //Getter for the payload we're holding
     public Datagram getPayload(){
         return this.packet;

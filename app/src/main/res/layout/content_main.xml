@@ -173,7 +173,8 @@
                 android:layout_height="78dp"
                 android:layout_below="@+id/arp_table_title"
                 android:background="@color/colorPrimary"
-                android:textColor="@color/whiteText" />
+                android:textColor="@color/whiteText"
+                android:id="@+id/arpListView"/>
 
         </RelativeLayout>
 
@@ -204,7 +205,8 @@
                 android:layout_height="78dp"
                 android:layout_below="@+id/forwardingTitleBar"
                 android:background="@color/colorPrimary"
-                android:textColor="@color/whiteText" />
+                android:textColor="@color/whiteText"
+                android:id="@+id/forwardingTableListView"/>
 
         </RelativeLayout>
 

@@ -42,12 +42,24 @@ public class Constants implements Observer {
     final public static int LL2P_SOURCE_ADDRESS = 21;
     final public static int LL2P_DESTINATION_ADDRESS = 22;
     final public static int LL2P_CRC = 23;
-    final public static int LL2P_TYPE = 25; //TODO maybe fix the constants for fields to be sequential
+    final public static int LL2P_TYPE = 24; //TODO maybe fix the constants for fields to be sequential
 
     //Unique identifiers for types of table records
-    final public static int ADJACENCY_RECORD = 26;
+    final public static int ADJACENCY_RECORD = 25;
     final public static int ARP_RECORD = 27;
     final public static int ROUTING_RECORD = 28;
+
+    //LL3P Address field identifiers
+    final public static int LL3P_SRC_ADDRESS = 29;
+    final public static int LL3P_HST_ADDRESS = 30;
+
+    //Unique Payload Identifers
+    final public static int DATAGRAM_IS_ARP = 31;
+    final public static int DATAGRAM_IS_TEXT = 32;
+    final public static int DATAGRAM_IS_LL2P = 33;
+
+    //LL3P Length in bytes
+    final public static int LL3P_ADDRESS_LENGTH = 8;
 
     // Valid types for LL2P Frames
     final public static int LL2P_TYPE_IS_LL3P = 0x8001;

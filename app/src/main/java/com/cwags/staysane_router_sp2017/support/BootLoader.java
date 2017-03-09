@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.cwags.staysane_router_sp2017.networks.Constants;
+import com.cwags.staysane_router_sp2017.networks.daemon.ARPDaemon;
 import com.cwags.staysane_router_sp2017.networks.daemon.LL1Daemon;
 import com.cwags.staysane_router_sp2017.networks.daemon.LL2PDaemon;
 import com.cwags.staysane_router_sp2017.networks.datagram.LL2PFrame;
@@ -49,6 +50,7 @@ public class BootLoader extends Observable {
         addObserver(FrameLogger.getInstance());
         addObserver(LL1Daemon.getInstance());
         addObserver(LL2PDaemon.getInstance());
+        addObserver(ARPDaemon.getInstance());
         addObserver(UIManager.getInstance().getSnifferUI());
 
         //Notifying the observers that the router is booted
@@ -100,11 +102,8 @@ public class BootLoader extends Observable {
         ll1.addAdjacency("112233" , "10.30.34.175");
         ll1.sendFrame(testFrameBytes);
 
-        //Test individual field methods
-        Log.e(Constants.logTag,"TextDatagram toHex: " + testTextDatagram.toHexString());
-        //Log.e(Constants.logTag,"TextDatagram toAscii: " + Utilities.convertToAscii(testTextDatagram.toHexString()));
-        Log.e(Constants.logTag,testTextDatagram.toSummaryString());
-        Log.i(Constants.logTag,testFrameBytes.toSummaryString());
+        //Test ARP functionality
+        ARPDaemon.getInstance().testARP();
 
         Log.e(Constants.logTag, testLL2PDatagram.toProtocolExplanationString());
 

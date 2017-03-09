@@ -20,7 +20,7 @@ public class ARPRecord extends TableRecord {
     //Age is already inside of parent class
 
     //Constructor that is passed LL2P and LL3P
-    ARPRecord(Integer ll2p, Integer ll3p){
+    public ARPRecord(Integer ll2p, Integer ll3p){
         super();
         ll2pAddress = ll2p;
         ll3pAddress = ll3p;
@@ -28,10 +28,10 @@ public class ARPRecord extends TableRecord {
 
 /**
  * This constructor initializes a record with values of zero in the address fields.
- * This is used when returning an empty record. The process that receives and empty record will use
+ * This is used when returning an empty record. The process that receives an empty record will use
  * the setter methods to set the layer 2 and layer 3 address fields.
  */
-    ARPRecord(){
+    public ARPRecord(){
         super();
         ll2pAddress = 0;
         ll3pAddress = 0;
@@ -65,6 +65,7 @@ public class ARPRecord extends TableRecord {
     @Override
     public String toString(){
         return "ARP Record: LL2P = " + Integer.toHexString(ll2pAddress)
-                + " LL3P = " + Integer.toHexString(ll3pAddress);
+                + " LL3P = " + Integer.toHexString(ll3pAddress) +
+                "Age: " + getAgeInSeconds().toString();
     }
 }

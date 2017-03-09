@@ -3,6 +3,7 @@ package com.cwags.staysane_router_sp2017.support.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,9 @@ public class SnifferUI implements Observer {
         frameBytesTextView = (TextView) parentActivity.findViewById(R.id.hexPacketContent);
         //Inform the ListView object where its OnClickListener method is
         frameListView.setOnItemClickListener(showThisFrame);
+        //Making the hex and protocol views scrollable
+        frameBytesTextView.setMovementMethod(new ScrollingMovementMethod());
+        protocolBreakoutTextView.setMovementMethod(new ScrollingMovementMethod());
     }
 
 

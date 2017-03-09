@@ -1,7 +1,15 @@
 package com.cwags.staysane_router_sp2017.networks.datagram_header_field;
 
+import com.cwags.staysane_router_sp2017.networks.Constants;
+import com.cwags.staysane_router_sp2017.support.Utilities;
+
 /**
- * Created by christian.wagner on 2/23/17.
+ * Name: LL3PAddressField
+ *
+ * Description: The LL3P Address is a two byte Integer. The high order 8 bits are an unsigned
+ * integer which specify the network number. The low order 8 bits are an unsigned integer which
+ * specify the host number.  In examples, the LL3P address 12.14 would be stored in hex as 0x0C0E.
+ * The LL3P address field class must support the need of other classes to get this information.
  */
 
 public class LL3PAddressField implements DatagramHeaderField {
@@ -21,27 +29,56 @@ public class LL3PAddressField implements DatagramHeaderField {
     //Constructor that is passed a string of hex characters describing the integer value of the
     //address and whether this is a source or destination address. All local fields (objects) should
     //be created and filled using this String.
-    LL3PAddressField(String hexString){
-        //TODO clarify if one parameter is taken in, or several
+    public LL3PAddressField(String hexString, boolean isSource){
+
+        address = Integer.valueOf(hexString,16);
+        isSourceAddress = isSource;
+        setHostNumber();
+        setNetworkNumber();
+        setExplanationString();
+    }
+
+    //Method to set the explanation string
+    private void setExplanationString(){
+        if(isSourceAddress){
+            explanationString = "LL3P Source Address: " +
+                    networkNumber +
+                    " (0x" + Integer.toHexString(hostNumber) + ")";
+        }
+        else{
+            explanationString = "LL3P Host Address: " +
+                    networkNumber +
+                    " (0x" + Integer.toHexString(hostNumber) + ")";
+        }
+    }
+
+    //Method to set the network number
+    private void setNetworkNumber(){
+        networkNumber = Integer.valueOf(Integer.toHexString(address).substring(0,2));
+    }
+
+    //Method to set the host number
+    private void setHostNumber(){
+        hostNumber = Integer.valueOf(Integer.toHexString(address).substring(2,4));
     }
 
     @Override
     public String toTransmissionString() {
-        return null;
+        return toHexString();
     }
 
     @Override
     public String toHexString() {
-        return null;
+        return Utilities.padHexString(Integer.toHexString(address), Constants.LL3P_ADDRESS_LENGTH);
     }
 
     @Override
     public String explainSelf() {
-        return null;
+        return explanationString;
     }
 
     @Override
     public String toAsciiString() {
-        return null;
+        return Utilities.convertToAscii(toHexString());
     }
 }

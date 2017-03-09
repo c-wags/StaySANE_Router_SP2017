@@ -3,6 +3,7 @@ package com.cwags.staysane_router_sp2017.networks.daemon;
 import android.app.UiModeManager;
 
 import com.cwags.staysane_router_sp2017.networks.Constants;
+import com.cwags.staysane_router_sp2017.networks.datagram.Datagram;
 import com.cwags.staysane_router_sp2017.networks.datagram.LL2PFrame;
 import com.cwags.staysane_router_sp2017.networks.datagram.TextDatagram;
 import com.cwags.staysane_router_sp2017.networks.datagram_header_field.LL2PAddressField;
@@ -67,7 +68,12 @@ public class LL2PDaemon implements Observer{
                     break;
                 //If this frame is unsupported as of now
                 case Constants.LL2P_TYPE_IS_ARP_REPLY:
+                    uiManager.displayMessage("ARP Reply Received: " +
+                            frameToProcess.toProtocolExplanationString());
+                    break;
                 case Constants.LL2P_TYPE_IS_ARP_REQUEST:
+                  //TODO  answerARPRequest(frameToProcess);
+                    break;
                 case Constants.LL2P_TYPE_IS_LL3P:
                 case Constants.LL2P_TYPE_IS_LRP:
                 case Constants.LL2P_TYPE_IS_RESERVED:
@@ -101,8 +107,6 @@ public class LL2PDaemon implements Observer{
 
         //Send the echo reply
         ll1Daemon.sendFrame(echoReply);
-
-        //TODO build and ask LL1Daemon to send echo request
     }
 
     //This method will create an LL2P frame with text of your choosing. The frame will be sent to
@@ -120,5 +124,9 @@ public class LL2PDaemon implements Observer{
         //Send the frame
         ll1Daemon.sendFrame(adjFrame);
         uiManager.displayMessage("Frame sent to: " + addressToRespondTo.toTransmissionString());
+    }
+
+    public void sendLL2PFrame(Datagram frameToSend, LL2PAddressField addressToSendTo){
+        //TODO implement this
     }
 }

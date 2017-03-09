@@ -3,6 +3,7 @@ package com.cwags.staysane_router_sp2017.support.ui;
 import android.app.Activity;
 
 import com.cwags.staysane_router_sp2017.R;
+import com.cwags.staysane_router_sp2017.networks.daemon.ARPDaemon;
 import com.cwags.staysane_router_sp2017.networks.daemon.LL1Daemon;
 import com.cwags.staysane_router_sp2017.support.BootLoader;
 import com.cwags.staysane_router_sp2017.support.ParentActivity;
@@ -51,6 +52,8 @@ public class TableUI implements Runnable,Observer {
             //Creating the AdjacencyTableUI
             adjacencyUI = new AdjacencyTableUI(activity, R.id.adjacencyListView,
                     LL1Daemon.getInstance().getAdjacencyTable(),LL1Daemon.getInstance());
+            //TODO Creating the ARP Table UI
+            arpTableUI = new SingleTableUI(activity,R.id.arpListView, ARPDaemon.getInstance().getArpTable());
         }
     }
 }

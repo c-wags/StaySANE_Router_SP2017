@@ -18,7 +18,7 @@ public class TextDatagram implements Datagram {
 
     //Constructor which sets the payload text to the passed in text
     public TextDatagram(String text) {
-        payloadText = (TextPayload) Factory.getInstance().getDatagramHeaderField(Constants.LL2P_TYPE_IS_TEXT,text);
+        payloadText = new TextPayload(text);
     }
 
     //Returns the payload text for transmission
