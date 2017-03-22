@@ -41,7 +41,7 @@ public class ARPRecord extends TableRecord {
     @Override
     public Integer getKey(){
         return ll2pAddress;
-    }
+    } //TODO check on which address to use
 
     //Getters and setters for fields
 

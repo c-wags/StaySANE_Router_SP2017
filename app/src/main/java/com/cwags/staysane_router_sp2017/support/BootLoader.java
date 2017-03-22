@@ -7,6 +7,7 @@ import com.cwags.staysane_router_sp2017.networks.Constants;
 import com.cwags.staysane_router_sp2017.networks.daemon.ARPDaemon;
 import com.cwags.staysane_router_sp2017.networks.daemon.LL1Daemon;
 import com.cwags.staysane_router_sp2017.networks.daemon.LL2PDaemon;
+import com.cwags.staysane_router_sp2017.networks.daemon.Scheduler;
 import com.cwags.staysane_router_sp2017.networks.datagram.LL2PFrame;
 import com.cwags.staysane_router_sp2017.networks.datagram.TextDatagram;
 import com.cwags.staysane_router_sp2017.networks.datagram_header_field.CRC;
@@ -52,6 +53,7 @@ public class BootLoader extends Observable {
         addObserver(LL2PDaemon.getInstance());
         addObserver(ARPDaemon.getInstance());
         addObserver(UIManager.getInstance().getSnifferUI());
+        addObserver(Scheduler.getInstance());
 
         //Notifying the observers that the router is booted
         setChanged();
@@ -83,8 +85,8 @@ public class BootLoader extends Observable {
 
         //Testing table class
         LL1Daemon ll1 = LL1Daemon.getInstance();
-        AdjacencyRecord testRecord1 = new AdjacencyRecord(GetIPAddress.getInstance().getInetAddress("10.30.34.175"),0x314159);
-        AdjacencyRecord testRecord2 = new AdjacencyRecord(GetIPAddress.getInstance().getInetAddress("10.30.34.175"),0x112233);
+        AdjacencyRecord testRecord1 = new AdjacencyRecord(GetIPAddress.getInstance().getInetAddress("10.75.128.231"),0x314159);
+        AdjacencyRecord testRecord2 = new AdjacencyRecord(GetIPAddress.getInstance().getInetAddress("10.75.128.231"),0x112233);
         Table table = new Table();
         table.addItem(testRecord1);
         table.addItem(testRecord2);
@@ -93,13 +95,13 @@ public class BootLoader extends Observable {
         Log.d(Constants.logTag,"Record removed from table!");
 
         //Testing LL1Daemon
-        ll1.addAdjacency("314159","10.30.34.175");
+        ll1.addAdjacency("314159","10.75.128.231");
         AdjacencyRecord testRecord3 = ll1.getAdjacencyRecord(0x314159);
         Log.d(Constants.logTag, "Record found in LL1 table: " + testRecord3.toString());
         ll1.removeAdjacency(testRecord3);
 
         //Test sending a frame
-        ll1.addAdjacency("112233" , "10.30.34.175");
+        ll1.addAdjacency("112233" , "10.75.128.231");
         ll1.sendFrame(testFrameBytes);
 
         //Test ARP functionality

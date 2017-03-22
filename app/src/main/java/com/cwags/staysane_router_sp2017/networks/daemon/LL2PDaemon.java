@@ -3,12 +3,14 @@ package com.cwags.staysane_router_sp2017.networks.daemon;
 import android.app.UiModeManager;
 
 import com.cwags.staysane_router_sp2017.networks.Constants;
+import com.cwags.staysane_router_sp2017.networks.datagram.ARPDatagram;
 import com.cwags.staysane_router_sp2017.networks.datagram.Datagram;
 import com.cwags.staysane_router_sp2017.networks.datagram.LL2PFrame;
 import com.cwags.staysane_router_sp2017.networks.datagram.TextDatagram;
 import com.cwags.staysane_router_sp2017.networks.datagram_header_field.LL2PAddressField;
 import com.cwags.staysane_router_sp2017.networks.datagram_header_field.LL2PTypeField;
 import com.cwags.staysane_router_sp2017.support.BootLoader;
+import com.cwags.staysane_router_sp2017.support.Factory;
 import com.cwags.staysane_router_sp2017.support.ui.UIManager;
 
 import java.util.Observable;
@@ -30,6 +32,9 @@ public class LL2PDaemon implements Observer{
     //Local copy of the LL1Daemon
     private LL1Daemon ll1Daemon;
 
+    //Local copy to the ARP Daemon
+    private ARPDaemon arpDaemon;
+
     //Sets 'ourInstance' to a new, Singleton copy of the LL2PDaemon
     private static LL2PDaemon ourInstance = new LL2PDaemon();
 
@@ -48,6 +53,7 @@ public class LL2PDaemon implements Observer{
         if(o.getClass().equals(BootLoader.class)){
             uiManager = UIManager.getInstance();
             ll1Daemon = LL1Daemon.getInstance();
+            arpDaemon = ARPDaemon.getInstance();
         }
     }
 
@@ -61,19 +67,28 @@ public class LL2PDaemon implements Observer{
                 case Constants.LL2P_TYPE_IS_ECHO_REQUEST:
                     answerEchoRequest(frameToProcess);
                     break;
+                //If an echo reply is received
                 case Constants.LL2P_TYPE_IS_ECHO_REPLY:
                     //Show that we received an echo reply and the frame's contents
                     uiManager.displayMessage("Echo Reply Received: " +
                             frameToProcess.toProtocolExplanationString());
                     break;
-                //If this frame is unsupported as of now
+                //If an ARP Reply is received
                 case Constants.LL2P_TYPE_IS_ARP_REPLY:
                     uiManager.displayMessage("ARP Reply Received: " +
                             frameToProcess.toProtocolExplanationString());
+                    ARPDatagram arpReplyReceived = (ARPDatagram)Factory.getInstance().getDatagram(Constants.DATAGRAM_IS_ARP,frameToProcess.getPayload().toTransmissionString());
+                    //Pass ARP Reply to ARP Daemon to handle it there
+                    arpDaemon.processARPReply(frameToProcess.getSourceAddress().getAddress(),arpReplyReceived);
                     break;
                 case Constants.LL2P_TYPE_IS_ARP_REQUEST:
-                  //TODO  answerARPRequest(frameToProcess);
+                    uiManager.displayMessage("ARP Request Received: " +
+                            frameToProcess.toProtocolExplanationString());
+                    ARPDatagram arpRequestReceived = (ARPDatagram)Factory.getInstance().getDatagram(Constants.DATAGRAM_IS_ARP,frameToProcess.getPayload().toTransmissionString());
+                    //Pass ARP Reply to ARP Daemon to handle it there
+                    arpDaemon.processARPRequest(frameToProcess.getSourceAddress().getAddress(),arpRequestReceived);
                     break;
+                //If this frame is unsupported as of now
                 case Constants.LL2P_TYPE_IS_LL3P:
                 case Constants.LL2P_TYPE_IS_LRP:
                 case Constants.LL2P_TYPE_IS_RESERVED:
@@ -117,7 +132,8 @@ public class LL2PDaemon implements Observer{
         String frameString = Integer.toHexString(addressToRespondTo.getAddress()) +
                 Integer.toHexString(Constants.LL2P_ADDRESS_NAME) +
                 Integer.toHexString(Constants.LL2P_TYPE_IS_ECHO_REQUEST) +
-                "Echo Contents" + "0000";
+                "Echo Contents" +
+                "0000";
         byte[] frameByteString = frameString.getBytes();
         LL2PFrame adjFrame = new LL2PFrame(frameByteString);
 
@@ -126,7 +142,29 @@ public class LL2PDaemon implements Observer{
         uiManager.displayMessage("Frame sent to: " + addressToRespondTo.toTransmissionString());
     }
 
-    public void sendLL2PFrame(Datagram frameToSend, LL2PAddressField addressToSendTo){
-        //TODO implement this
+    public void sendARPReply(Datagram frameToSend, String addressToSendTo){
+
+        //Send Arp Reply
+        String frameString = addressToSendTo +
+                Integer.toHexString(Constants.LL2P_ADDRESS_NAME) +
+                Integer.toHexString(Constants.LL2P_TYPE_IS_ARP_REPLY) +
+                frameToSend.toTransmissionString() +
+                "0000";
+        byte[] frameByteString = frameString.getBytes();
+        LL2PFrame arpReplyFrame = new LL2PFrame(frameByteString);
+        ll1Daemon.sendFrame(arpReplyFrame);
+    }
+
+    public void sendARPRequest(Datagram frameToSend, String addressToSendTo){
+
+        //Send the ARP Request
+        String frameString = addressToSendTo +
+                Integer.toHexString(Constants.LL2P_ADDRESS_NAME) +
+                Integer.toHexString(Constants.LL2P_TYPE_IS_ARP_REQUEST) +
+                frameToSend.toTransmissionString() +
+                "0000";
+        byte[] frameByteString = frameString.getBytes();
+        LL2PFrame arpReplyFrame = new LL2PFrame(frameByteString);
+        ll1Daemon.sendFrame(arpReplyFrame);
     }
 }

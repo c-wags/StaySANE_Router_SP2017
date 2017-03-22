@@ -23,6 +23,24 @@ public class Constants implements Observer {
     public static String routerName = new String("Cwags"); //This is the name of the router
     public static String logTag = new String("CWAGS: "); //This is the name that will appear in log messages
 
+    //Number of threads to run on the Scheduler's ScheduledThreadPoolExecutor
+    final public static int THREAD_COUNT = 25; //TODO verify this
+
+    //Delay to allow router to boot (seconds)
+    final public static int ROUTER_BOOT_TIME = 5;
+
+    //Interval that the ARP Daemon should run (seconds)
+    final public static int ARP_UPDATE_INTERVAL = 5;
+
+    //Maximum age that ARP entries should
+    final public static int MAX_ARP_AGE_IN_SECONDS = 10;
+
+    //Interval that the UI should update (seconds)
+    final public static int UI_UPDATE_INTERVAL = 1;
+
+    //LL3P address for this router
+    final public static int LL3P_ADDRESS_NAME = 0x0C01;
+
     //LL2P Address for this router
     final public static int LL2P_ADDRESS_NAME = 0xBADB01;
 
@@ -50,16 +68,16 @@ public class Constants implements Observer {
     final public static int ROUTING_RECORD = 28;
 
     //LL3P Address field identifiers
-    final public static int LL3P_SRC_ADDRESS = 29;
-    final public static int LL3P_HST_ADDRESS = 30;
+    final public static int LL3P_ADDRESS = 29;
+
 
     //Unique Payload Identifers
-    final public static int DATAGRAM_IS_ARP = 31;
-    final public static int DATAGRAM_IS_TEXT = 32;
-    final public static int DATAGRAM_IS_LL2P = 33;
+    final public static int DATAGRAM_IS_ARP = 30;
+    final public static int DATAGRAM_IS_TEXT = 31;
+    final public static int DATAGRAM_IS_LL2P = 32;
 
     //LL3P Length in bytes
-    final public static int LL3P_ADDRESS_LENGTH = 8;
+    final public static int LL3P_ADDRESS_LENGTH = 2;
 
     // Valid types for LL2P Frames
     final public static int LL2P_TYPE_IS_LL3P = 0x8001;

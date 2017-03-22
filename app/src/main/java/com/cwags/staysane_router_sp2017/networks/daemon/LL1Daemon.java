@@ -178,6 +178,8 @@ public class LL1Daemon extends Observable implements Observer{
         //Add the record to the adjacency table
         adjacencyTable.addItem(adjacencyRecord);
 
+        ARPDaemon.getInstance().sendARPRequest(ll2pAddress);
+
         //Notify observers of a change in the table; adjacencyRecord passed to indicate that
         //adjacency table has changed.
         setChanged();

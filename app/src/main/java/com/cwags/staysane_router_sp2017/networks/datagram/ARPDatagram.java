@@ -18,7 +18,7 @@ public class ARPDatagram implements Datagram {
     //The constructor is passed the String of LL3P address carried by the payload.
     public ARPDatagram(String ll3pAddressOfPayload){
        ll3pAddress = (LL3PAddressField) Factory.getInstance().getDatagramHeaderField(
-               Constants.LL3P_HST_ADDRESS,
+               Constants.LL3P_ADDRESS,
                ll3pAddressOfPayload);
         //TODO figure out how to distinguish between host and source address in creation
     }

@@ -39,13 +39,12 @@ public class FrameLogger extends Observable implements Observer{
     @Override
     public void update(Observable observable, Object o) {
 
-        //Adding observers of this class
-        addObserver(LL1Daemon.getInstance());
+
 
         //If we receive an update from the Bootloader
         if(observable.getClass() == BootLoader.class) {
 
-            // Once the router is booted, add the SnifferUI to the list of observers
+            //Adding observers of this class
             addObserver(UIManager.getInstance().getSnifferUI());
         }
 

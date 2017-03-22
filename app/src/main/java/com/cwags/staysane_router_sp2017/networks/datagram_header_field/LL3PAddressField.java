@@ -33,8 +33,8 @@ public class LL3PAddressField implements DatagramHeaderField {
 
         address = Integer.valueOf(hexString,16);
         isSourceAddress = isSource;
-        setHostNumber();
         setNetworkNumber();
+        setHostNumber();
         setExplanationString();
     }
 
@@ -42,24 +42,28 @@ public class LL3PAddressField implements DatagramHeaderField {
     private void setExplanationString(){
         if(isSourceAddress){
             explanationString = "LL3P Source Address: " +
-                    networkNumber +
-                    " (0x" + Integer.toHexString(hostNumber) + ")";
+                    networkNumber + "." +
+                    hostNumber +
+                    " (0x" + Utilities.padHexString(Integer.toHexString(address),Constants.LL3P_ADDRESS_LENGTH) + ")";
         }
         else{
             explanationString = "LL3P Host Address: " +
-                    networkNumber +
-                    " (0x" + Integer.toHexString(hostNumber) + ")";
+                    networkNumber + "." +
+                    hostNumber +
+                    " (0x" + Utilities.padHexString(Integer.toHexString(address),Constants.LL3P_ADDRESS_LENGTH) + ")";
         }
     }
 
     //Method to set the network number
     private void setNetworkNumber(){
-        networkNumber = Integer.valueOf(Integer.toHexString(address).substring(0,2));
+        String paddedAddress = Utilities.padHexString(Integer.toHexString(address),Constants.LL3P_ADDRESS_LENGTH);
+        networkNumber = Integer.valueOf(paddedAddress.substring(0,2),16);
     }
 
     //Method to set the host number
     private void setHostNumber(){
-        hostNumber = Integer.valueOf(Integer.toHexString(address).substring(2,4));
+        String paddedAddress = Utilities.padHexString(Integer.toHexString(address),Constants.LL3P_ADDRESS_LENGTH);
+        hostNumber = Integer.valueOf(paddedAddress.substring(2),16);
     }
 
     @Override

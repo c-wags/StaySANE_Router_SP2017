@@ -31,8 +31,8 @@ import static com.cwags.staysane_router_sp2017.networks.Constants.LL2P_TYPE_IS_L
 import static com.cwags.staysane_router_sp2017.networks.Constants.LL2P_TYPE_IS_LRP;
 import static com.cwags.staysane_router_sp2017.networks.Constants.LL2P_TYPE_IS_RESERVED;
 import static com.cwags.staysane_router_sp2017.networks.Constants.LL2P_TYPE_IS_TEXT;
-import static com.cwags.staysane_router_sp2017.networks.Constants.LL3P_HST_ADDRESS;
-import static com.cwags.staysane_router_sp2017.networks.Constants.LL3P_SRC_ADDRESS;
+import static com.cwags.staysane_router_sp2017.networks.Constants.LL3P_ADDRESS;
+import static com.cwags.staysane_router_sp2017.networks.Constants.LL3P_ADDRESS_NAME;
 
 /**
  * Name: Factory Class
@@ -81,10 +81,13 @@ public class Factory {
             case LL2P_TYPE_IS_RESERVED:
             case LL2P_TYPE_IS_TEXT:
                 return new DatagramPayloadField(getDatagram(Constants.DATAGRAM_IS_TEXT, contents));
-            case LL3P_HST_ADDRESS:
-                return new LL3PAddressField(contents, false);
-            case LL3P_SRC_ADDRESS:
-                return new LL3PAddressField(contents, true);
+            case LL3P_ADDRESS:
+                if(Integer.valueOf(contents,16).equals(Integer.valueOf(Integer.toHexString(LL3P_ADDRESS_NAME),16))){
+                    return new LL3PAddressField(contents, true);
+                }
+                else {
+                    return new LL3PAddressField(contents, false);
+                }
             default: return null;
         }
     }
